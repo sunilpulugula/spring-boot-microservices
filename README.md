@@ -11,8 +11,8 @@ This repo contains multiple spring bott project which has following microservice
 6. Spring sleuth (Distrubuted Tracing)
 7. Spring cloud config bus
 8. Resilience4j
-  a. Retry
-  b. Fallback
-  c. Bulkhead
-  d. Circuit Breaker
-  e. Rate Limit
+  - Retry
+  - Fallback
+  - Bulkhead
+  - Circuit Breaker
+  - Rate Limit
