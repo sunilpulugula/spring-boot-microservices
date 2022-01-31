@@ -1,0 +1,50 @@
+spring.application:
+  name: currency-conversion
+
+server.port: 8100
+
+eureka.client.serviceUrl.defaultZone: http://localhost:8761/eureka
+
+resilience4j.retry:
+  configs:
+    default:
+      maxRetryAttempts: 5
+      waitDuration: 100
+      enableExponentialBackOff: true
+  instances:
+    ApplicationB:
+      baseConfig: default
+
+resilience4j.bulkhead:
+  instances:
+    default:
+      # Max amount of time a thread should be blocked
+      # when attempting to enter a saturated bulkhead.
+      maxWaitDuration: 100ms
+      # Max amount of parallel executions allowed by the bulkhead.
+      maxConcurrentCalls: 10
+
+resilience4j.ratelimiter:
+  instances:
+    default:
+      # The number of permissions available during one limit refresh period.
+      limitForPeriod: 10
+      # After each period, the rate limiter sets its permissions count
+      # back to the limitForPeriod value.
+      limitRefreshPeriod: 2s
+      # The default wait time a thread waits for permission.
+      timeoutDuration: 500ms
+
+resilience4j.circuitbreaker:
+  configs:
+    default:
+      registerHealthIndicator: true
+      slidingWindowSize: 10
+      minimumNumberOfCalls: 5
+      permittedNumberOfCallsInHalfOpenState: 3
+      automaticTransitionFromOpenToHalfOpenEnabled: true
+      waitDurationInOpenState: 5s
+      failureRateThreshold: 50
+  instances:
+    ApplicationB:
+      baseConfig: default
